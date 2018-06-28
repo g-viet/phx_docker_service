@@ -1,0 +1,13 @@
+version: '2'
+services:
+  db:
+    image: postgres:9.5
+  phx_docker_service:
+    build: ./
+    command: mix phx.server
+    volumes:
+      - .:/srv/phx_docker_service
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
