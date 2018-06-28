@@ -52,7 +52,7 @@ config :phoenix, :stacktrace_depth, 20
 config :phx_docker_service, PhxDockerService.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "postgres",
+  password: "",
   database: "phx_docker_service_dev",
-  hostname: "localhost",
+  hostname: "db",
   pool_size: 10
