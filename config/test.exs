@@ -13,7 +13,7 @@ config :logger, level: :warn
 config :phx_docker_service, PhxDockerService.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "postgres",
+  password: "",
   database: "phx_docker_service_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

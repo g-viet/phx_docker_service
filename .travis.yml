@@ -1,0 +1,25 @@
+language: elixir
+elixir:
+  - 1.6.6
+otp_release:
+  - 20.3
+sudo: required
+addons:
+  postgresql: "10"
+  apt:
+    packages:
+      - postgresql-10
+      - postgresql-client-10
+services:
+  - postgresql
+env:
+  global:
+    - PGPORT=5433
+before_script:
+  - sudo service postgresql status
+  - mix do ecto.create, ecto.migrate
+script: mix test
+notifications:
+  recipients:
+    - g-viet@eole.co.jp
+
