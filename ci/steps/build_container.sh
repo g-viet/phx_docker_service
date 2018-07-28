@@ -1,2 +1,2 @@
 #!/bin/sh
-docker build --build-arg VERSION=${1} -t leifg/time_tracking .
+docker build --build-arg VERSION=${1} -t phx_docker_service .
