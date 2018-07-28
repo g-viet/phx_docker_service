@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  test:
     parallelism: 1
     docker:
       - image: circleci/elixir:latest
@@ -23,17 +23,6 @@ jobs:
           name: Wait for DB
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run: mix ecto.create
-  test:
-    docker:
-      - image: circleci/elixir:latest
-        environment:
-          MIX_ENV: test
-    working_directory: ~/app
-    steps:
-      # - attach_workspace:
-      #     at: /
-      - run: pwd
-      - run: ls -la
       - run:
           name: Test
           command: mix test
@@ -61,10 +50,7 @@ workflows:
   version: 2
   build-test-deploy:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - test
       - deploy:
           requires:
             - test
