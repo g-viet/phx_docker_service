@@ -12,8 +12,8 @@ base_dir=$(dirname $0)
   echo "Build Release"
   ${base_dir}/steps/build_release.sh
 
-  echo "Run Service"
-  ${base_dir}/steps/run_service.sh
+  # echo "Run Service"
+  # ${base_dir}/steps/run_service.sh
 
   # echo "Build Run Container"
   # ${base_dir}/steps/build_container.sh ${VERSION}
