@@ -28,6 +28,7 @@ jobs:
       - image: circleci/elixir:latest
         environment:
           MIX_ENV: test
+    working_directory: ~/app
     steps:
       - attach_workspace:
           at: /
