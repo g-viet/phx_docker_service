@@ -47,6 +47,9 @@ jobs:
       - run:
           name: Get Dependencies
           command: mix deps.get
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
       # - run:
       #     name: Semantic Release
       #     command:  semantic-release -vf -slug leifg/time_tracking -noci || true
