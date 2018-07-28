@@ -46,7 +46,7 @@ jobs:
       #     command:  semantic-release -vf -slug leifg/time_tracking -noci || true
       - run:
           name: Run Deployment
-          command: ci/deploy.sh
+          command: chmod +x ./ci && ./ci/deploy.sh
 
 workflows:
   version: 2
