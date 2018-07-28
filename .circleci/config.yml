@@ -36,12 +36,13 @@ jobs:
       - image: circleci/postgres:10.1-alpine
         environment:
           POSTGRES_USER: postgres
-          POSTGRES_DB: app_test
+          POSTGRES_DB: phx_docker_service_dev
           POSTGRES_PASSWORD:
       - image: neo4j:3.4.5
+    working_directory: ~/app
     steps:
       - checkout
-      - setup_remote_docker
+      # - setup_remote_docker
       - run: mix local.hex --force
       - run: mix local.rebar --force
       - run:
