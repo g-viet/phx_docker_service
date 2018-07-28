@@ -3,7 +3,7 @@ jobs:
   test:
     parallelism: 1
     docker:
-      - image: circleci/elixir:latest
+      - image: circleci/elixir:1.6.6
         environment:
           MIX_ENV: test
       - image: circleci/postgres:10.1-alpine
@@ -30,9 +30,15 @@ jobs:
           path: _build/test/lib/phx_docker_service
   deploy:
     docker:
-      - image: circleci/elixir:latest
+      - image: circleci/elixir:1.6.6
         environment:
           MIX_ENV: prod
+      - image: circleci/postgres:10.1-alpine
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: app_test
+          POSTGRES_PASSWORD:
+      - image: neo4j:3.4.5
     steps:
       - checkout
       - setup_remote_docker
