@@ -1,6 +1,8 @@
 # PhxDockerService
 Run Phoenix service with Docker:
 
+Test CI
+
 To start your Phoenix server with Docker:
 
   * Setup service container: `docker-compose build phx_docker_service`
