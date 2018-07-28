@@ -45,8 +45,8 @@ jobs:
       - run: mix local.hex --force
       - run: mix local.rebar --force
       - run:
-          name: Get Dependencies
-          command: mix deps.get
+          name: Get Dependencies & compile
+          command: mix do deps.get, compile
       - run:
           name: Wait for DB
           command: dockerize -wait tcp://localhost:5432 -timeout 1m

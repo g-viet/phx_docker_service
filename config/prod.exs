@@ -17,6 +17,13 @@ use Mix.Config
 #   load_from_system_env: true,
 #   url: [host: "example.com", port: 80],
 #   cache_static_manifest: "priv/static/cache_manifest.json"
+config :phx_docker_service, PhxDockerServiceWeb.Endpoint,
+  http: [port: 4000],
+  debug_errors: true,
+  code_reloader: true,
+  check_origin: false,
+  watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",
+                    cd: Path.expand("../assets", __DIR__)]]
 
 # Do not print debug messages in production
 config :logger, level: :info
