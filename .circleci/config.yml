@@ -1,8 +1,9 @@
 version: 2
 jobs:
   build:
+    parallelism: 1
     docker:
-      - image: leifg/time_tracking-base
+      - image: circleci/elixir:latest
         environment:
           MIX_ENV: test
       - image: circleci/postgres:10.1-alpine
@@ -10,21 +11,21 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_DB: app_test
           POSTGRES_PASSWORD:
+
+    working_directory: ~/app
+
     steps:
       - checkout
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      - run: mix do deps.get, compile
       - run:
-          name: Get Dependencies
-          command: mix deps.get
-      - run:
-          name: Compile
-          command: mix compile
-      - persist_to_workspace:
-          root: /
-          paths:
-            - root/project
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run: mix ecto.create
   test:
     docker:
-      - image: leifg/time_tracking-base
+      - image: circleci/elixir:latest
         environment:
           MIX_ENV: test
     steps:
@@ -33,9 +34,11 @@ jobs:
       - run:
           name: Test
           command: mix test
+      - store_test_results:
+          path: _build/test/lib/phx_docker_service
   deploy:
     docker:
-      - image: leifg/time_tracking-base
+      - image: circleci/elixir:latest
         environment:
           MIX_ENV: prod
     steps:
@@ -44,9 +47,9 @@ jobs:
       - run:
           name: Get Dependencies
           command: mix deps.get
-      - run:
-          name: Semantic Release
-          command:  semantic-release -vf -slug leifg/time_tracking -noci || true
+      # - run:
+      #     name: Semantic Release
+      #     command:  semantic-release -vf -slug leifg/time_tracking -noci || true
       - run:
           name: Run Deployment
           command: ci/deploy.sh
