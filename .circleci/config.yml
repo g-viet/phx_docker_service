@@ -5,6 +5,11 @@ jobs:
       - image: leifg/time_tracking-base
         environment:
           MIX_ENV: test
+      - image: circleci/postgres:10.1-alpine
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: app_test
+          POSTGRES_PASSWORD:
     steps:
       - checkout
       - run:
