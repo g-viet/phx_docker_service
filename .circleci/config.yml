@@ -28,44 +28,40 @@ jobs:
           command: mix test
       - store_test_results:
           path: _build/test/lib/phx_docker_service
+  build_aws_cli:
+    docker:
+      - image: circleci/python:2.7-jessie
+    working_directory: ~/circleci-docs
+    steps:
+      - run:
+          name: Install awscli
+          command: sudo pip install awscli
   deploy:
     docker:
       - image: circleci/elixir:1.6.6
-        environment:
-          MIX_ENV: prod
-      - image: circleci/postgres:10.1-alpine
-        environment:
-          POSTGRES_USER: postgres
-          POSTGRES_DB: phx_docker_service_dev
-          POSTGRES_PASSWORD:
-      - image: neo4j:3.4.5
+    environment:
+      MIX_ENV: prod
     working_directory: ~/app
     steps:
       - checkout
-      # - setup_remote_docker
+      - setup_remote_docker
+      - run: chmod +x ./ci ./ci/steps/*.sh
       - run: mix local.hex --force
       - run: mix local.rebar --force
-      - run:
-          name: Get Dependencies & compile
-          command: mix do deps.get, compile
-      - run:
-          name: Wait for DB
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
-      # - run:
-      #     name: Semantic Release
-      #     command:  semantic-release -vf -slug leifg/time_tracking -noci || true
+      - run: mix do deps.get, compile
+      - run: env MIX_ENV=prod mix do release.init, release --env=dev --verbose
       - run:
           name: Run Deployment
-          command: chmod +x ./ci ./ci/steps/*.sh && ./ci/deploy.sh
+          command: ./ci/deploy.sh
 
 workflows:
   version: 2
   build-test-deploy:
     jobs:
       # - test
-      - deploy
-      # - deploy:
-          # requires:
+      - deploy:
+          requires:
+            - build_aws_cli
           #   - test
           # filters:
           #   branches:

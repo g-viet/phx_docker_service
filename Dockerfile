@@ -56,6 +56,4 @@ RUN mix local.hex --force && \
 
 WORKDIR /srv/phx_docker_service
 
-EXPOSE 4000
-
-CMD PORT=4000 mix phx.server
+RUN ls -la
