@@ -49,7 +49,9 @@ jobs:
             curl -O https://bootstrap.pypa.io/get-pip.py
             python3 get-pip.py --user
             echo 'export PATH=~/.local/bin:$PATH' >> ~/.bashrc && source ~/.profile
+            echo 'AAAAA'
             pip --version
+            echo 'BBBBB'
             sudo pip install awscli --upgrade --user
       - run: aws --version
 
