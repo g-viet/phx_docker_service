@@ -50,7 +50,7 @@ jobs:
             python3 get-pip.py --user
             export PATH=~/.local/bin:$PATH && source ~/.profile
             pip --version
-            pip install awscli --upgrade --user
+            sudo pip install awscli --upgrade --user
       - run: aws --version
 
 
