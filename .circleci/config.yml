@@ -48,7 +48,8 @@ jobs:
           command: |
             curl -O https://bootstrap.pypa.io/get-pip.py
             python get-pip.py --user
-            export PATH=~/.local/bin:$PATH && source ~/.bash_profile
+            ls -la ~
+            export PATH=~/.local/bin:$PATH && source ~/.bashrc
             pip --version
             pip install awscli --upgrade --user
             aws --version
