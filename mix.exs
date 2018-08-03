@@ -4,7 +4,7 @@ defmodule PhxDockerService.Mixfile do
   def project do
     [
       app: :phx_docker_service,
-      version: "0.0.1",
+      version: version(),
       elixir: "~> 1.4",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
@@ -57,5 +57,11 @@ defmodule PhxDockerService.Mixfile do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "test": ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
+  end
+
+  defp version do
+    version = "0.0.1"
+    File.write!("VERSION", version)
+    version
   end
 end
