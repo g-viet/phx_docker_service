@@ -56,8 +56,7 @@ jobs:
       #     export PACKAGE="./_build/prod/rel/${SERVICE_NAME}/releases/`cat VERSION`/${SERVICE_NAME}.tar.gz"
       #     export DEST="s3://eole-circleci-test"
       #     aws s3 cp "${PACKAGE}" "${DEST}/`cat VERSION`.tar.gz"
-      - run: 
-        aws ssm send-command --instance-ids i-02434c08e2b57fd05 --document-name "AWS-RunShellScript" --comment "IP config" --parameters commands=ifconfig --output text
+      - run: aws ssm send-command --instance-ids i-02434c08e2b57fd05 --document-name "AWS-RunShellScript" --comment "IP config" --parameters commands=ifconfig --output text
 
 workflows:
   version: 2
