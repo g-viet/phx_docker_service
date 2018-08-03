@@ -38,11 +38,11 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: chmod +x ./ci ./ci/steps/*.sh
-      - run: mix local.hex --force
-      - run: mix local.rebar --force
-      - run: mix do deps.get, compile
-      - run: MIX_ENV=prod mix do release.init, release
+      # - run: chmod +x ./ci ./ci/steps/*.sh
+      # - run: mix local.hex --force
+      # - run: mix local.rebar --force
+      # - run: mix do deps.get, compile
+      # - run: MIX_ENV=prod mix do release.init, release
       - run: python --version
       - run: python3 --version
       - run: pip --version
