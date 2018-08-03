@@ -46,13 +46,13 @@ jobs:
       - run:
           name: Install awscli
           command: |
-            apt-get update
-            apt-get install python-pip python-dev jq
+            sudo apt-get update
+            sudo apt-get install python-pip python-dev jq
             # curl -O https://bootstrap.pypa.io/get-pip.py
             # python3 get-pip.py --user
             # export PATH=~/.local/bin:$PATH && source ~/.profile
             pip --version
-            pip install awscli --upgrade --user
+            sudo pip install awscli --upgrade --user
       - run: aws --version
 
 
