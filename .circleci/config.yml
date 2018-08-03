@@ -46,13 +46,10 @@ jobs:
       - run:
           name: Install awscli
           command: |
-            curl -O https://bootstrap.pypa.io/get-pip.py
-            python get-pip.py --user
-            ls -la ~
-            export PATH=~/.local/bin:$PATH && source ~/.bashrc
-            pip --version
-            pip install awscli --upgrade --user
-            aws --version
+            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+            unzip awscli-bundle.zip
+            ./awscli-bundle/install -b ~/bin/aws
+            echo $PATH | grep ~/bin && export PATH=~/bin:$PATH && source ~/.profile
       - run: aws --version
 
 
