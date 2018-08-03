@@ -43,6 +43,9 @@ jobs:
       - run: mix local.rebar --force
       - run: mix do deps.get, compile
       - run: MIX_ENV=prod mix do release.init, release
+      - run: python --version
+      - run: python3 --version
+      - run: pip --version
       - run: sudo pip install awscli
       - run: aws --version
 
