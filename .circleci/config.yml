@@ -43,10 +43,15 @@ jobs:
       # - run: mix local.rebar --force
       # - run: mix do deps.get, compile
       # - run: MIX_ENV=prod mix do release.init, release
-      - run: python --version
-      - run: python3 --version
-      - run: pip --version
-      - run: sudo pip install awscli
+      - run:
+          name: Install awscli
+          command: |
+            curl -O https://bootstrap.pypa.io/get-pip.py
+            python get-pip.py --user
+            export PATH=~/.local/bin:$PATH && source ~/.bash_profile
+            pip --version
+            pip install awscli --upgrade --user
+            aws --version
       - run: aws --version
 
 
