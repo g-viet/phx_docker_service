@@ -46,8 +46,8 @@ jobs:
       - run:
           name: Install awscli
           command: |
-            apt-get update
-            apt-get -y install awscli
+            sudo apt-get update
+            sudo apt-get -y install awscli
             # curl -O https://bootstrap.pypa.io/get-pip.py
             # python3 get-pip.py --user
             # echo 'export PATH=~/.local/bin:$PATH' >> ~/.bashrc && source ~/.profile
