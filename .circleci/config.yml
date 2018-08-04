@@ -44,13 +44,17 @@ jobs:
       #       sudo apt-get update
       #       sudo apt-get -y install awscli
       # - run: chmod +x ./ci ./ci/steps/*.sh
-      - run: mix local.hex --force
-      - run: mix local.rebar --force
-      - run: mix deps.get
-      - run: MIX_ENV=prod mix do release.init, release
-      - run: export PACKAGE="./_build/prod/rel/${SERVICE_NAME}/releases/`cat VERSION`/${SERVICE_NAME}.tar.gz"
-      - run: ssh -o StrictHostKeyChecking=no $AWS_USER@$AWS_HOST "sudo mkdir -p /app/${SERVICE_NAME}/releases"
-      - run: scp -o StrictHostKeyChecking=no "${PACKAGE}" "${AWS_USER}@${AWS_HOST}:/app/${SERVICE_NAME}/releases/`cat VERSION`.tar.gz"
+      # - run: mix local.hex --force
+      # - run: mix local.rebar --force
+      # - run: mix deps.get
+      # - run: MIX_ENV=prod mix do release.init, release
+      # - run: export PACKAGE="./_build/prod/rel/${SERVICE_NAME}/releases/`cat VERSION`/${SERVICE_NAME}.tar.gz"
+      - run: ssh -o StrictHostKeyChecking=no $AWS_USER@$AWS_HOST "sudo su - ec2-user"
+      - run: touch VERSION && echo "test" >> VERSION
+      - run: ssh -o StrictHostKeyChecking=no $AWS_USER@$AWS_HOST "mkdir -p /app/${SERVICE_NAME}/releases"
+      - run: scp -o StrictHostKeyChecking=no ./VERSION "${AWS_USER}@${AWS_HOST}:/app/${SERVICE_NAME}/releases/`cat VERSION`.tar.gz"
+      # - run: ssh -o StrictHostKeyChecking=no $AWS_USER@$AWS_HOST "sudo mkdir -p /app/${SERVICE_NAME}/releases"
+      # - run: scp -o StrictHostKeyChecking=no "${PACKAGE}" "${AWS_USER}@${AWS_HOST}:/app/${SERVICE_NAME}/releases/`cat VERSION`.tar.gz"
 
 workflows:
   version: 2
