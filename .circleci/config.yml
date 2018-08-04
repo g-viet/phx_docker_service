@@ -58,6 +58,7 @@ jobs:
           command: |
             ssh $AWS_USER@$AWS_HOST "sudo su - ec2-user"
             ssh $AWS_USER@$AWS_HOST "cd /app/${SERVICE_NAME}/releases && sudo mkdir -p `cat VERSION`"
+            ssh $AWS_USER@$AWS_HOST "rm -rf /app/${SERVICE_NAME}/releases/*"
             ssh $AWS_USER@$AWS_HOST "sudo cp ~/tmp/${SERVICE_NAME}.tar.gz /app/${SERVICE_NAME}/releases/`cat VERSION`/${SERVICE_NAME}.tar.gz"
             ssh $AWS_USER@$AWS_HOST "sudo tar zxvf /app/${SERVICE_NAME}/releases/`cat VERSION`/${SERVICE_NAME}.tar.gz -C /app/${SERVICE_NAME}/releases"
       - deploy:
@@ -65,8 +66,8 @@ jobs:
           command: |
             ssh $AWS_USER@$AWS_HOST "cd /app/${SERVICE_NAME}/releases"
             ssh $AWS_USER@$AWS_HOST "ls -la"
-            ssh $AWS_USER@$AWS_HOST "bin/${SERVICE_NAME} stop"
-            ssh $AWS_USER@$AWS_HOST "bin/${SERVICE_NAME} start"
+            ssh $AWS_USER@$AWS_HOST "/app/${SERVICE_NAME}/releases/${SERVICE_NAME} stop"
+            ssh $AWS_USER@$AWS_HOST "/app/${SERVICE_NAME}/releases/${SERVICE_NAME} start"
 
 workflows:
   version: 2
