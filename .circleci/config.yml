@@ -52,7 +52,7 @@ jobs:
       - run: ssh -o StrictHostKeyChecking=no $AWS_USER@$AWS_HOST "sudo su - ec2-user"
       - run: touch VERSION && echo "test" >> VERSION
       - run: ssh -o StrictHostKeyChecking=no $AWS_USER@$AWS_HOST "mkdir -p /app/${SERVICE_NAME}/releases"
-      - run: scp -o StrictHostKeyChecking=no ./VERSION "sudo ${AWS_USER}@${AWS_HOST}:/app/${SERVICE_NAME}/releases/`cat VERSION`/${SERVICE_NAME}"
+      - run: scp -o StrictHostKeyChecking=no -rp –preserve ./VERSION "${AWS_USER}@${AWS_HOST}:/app/${SERVICE_NAME}/releases/`cat VERSION`/${SERVICE_NAME}"
       # - run: ssh -o StrictHostKeyChecking=no $AWS_USER@$AWS_HOST "sudo mkdir -p /app/${SERVICE_NAME}/releases"
       # - run: scp -o StrictHostKeyChecking=no "${PACKAGE}" "${AWS_USER}@${AWS_HOST}:/app/${SERVICE_NAME}/releases/`cat VERSION`/${SERVICE_NAME}.tar.gz"
 
