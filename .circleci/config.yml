@@ -49,7 +49,7 @@ jobs:
       - run: mix deps.get
       - run: MIX_ENV=prod mix do release.init, release
       - run: export PACKAGE="./_build/prod/rel/${SERVICE_NAME}/releases/`cat VERSION`/${SERVICE_NAME}.tar.gz"
-      - run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $PACKAGE "${AWS_USER}@${AWS_HOST}:~/app/${SERVICE_NAME}/releases/`cat VERSION`.tar.gz"
+      - run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa "${PACKAGE}" "${AWS_USER}@${AWS_HOST}:~/app/${SERVICE_NAME}/releases/`cat VERSION`.tar.gz"
 
 workflows:
   version: 2
