@@ -48,10 +48,10 @@ jobs:
       - run: mix local.rebar --force
       - run: mix deps.get
       - run: MIX_ENV=prod mix do release.init, release
+      - run: ssh -o StrictHostKeyChecking=no $AWS_USER@$AWS_HOST "rm -rf ~/tmp && mkdir -p ~/tmp"
       - run: export PACKAGE="./_build/prod/rel/${SERVICE_NAME}/releases/`cat VERSION`/${SERVICE_NAME}.tar.gz"
-      - run: ssh -o StrictHostKeyChecking=no $AWS_USER@$AWS_HOST "cd && rm -rf tmp && mkdir tmp"
       - run: ls -la "./_build/prod/rel/${SERVICE_NAME}/releases/`cat VERSION`"
-      - run: scp -o StrictHostKeyChecking=no "${PACKAGE}" "${AWS_USER}@${AWS_HOST}:~/tmp/${SERVICE_NAME}.tar.gz"
+      - run: scp -o StrictHostKeyChecking=no "${PACKAGE}" "${AWS_USER}@${AWS_HOST}:~/${SERVICE_NAME}.tar.gz"
 
       - run: ssh $AWS_USER@$AWS_HOST "sudo su - ec2-user"
       - run: ssh $AWS_USER@$AWS_HOST "mkdir -p /app/${SERVICE_NAME}/releases/`cat VERSION`"
